@@ -3,10 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Sitio Web</title>
+  <title>Hola - Alex</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            box-sizing:border-box;
+        }
+        body{
+            width:100%;
+            min-height:100dvh;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            flex-direction: column;
+            background-color: #222;
+            overflow: hidden;
+        }
+        #rata{
+            width: min(400px, 70%);
+            position: relative;
+            translate: 0 105%;
+            &.move{
+                animation: show 5s linear forwards;
+            }
+        }
+        #hola{
+            padding: 15px 25px;
+            background: #fff;
+            font-family: sans-serif;
+            text-transform: capitalize;
+            font-size: 34px;
+            border-radius: 15px;
+            position: relative;
+            bottom: 15px;
+            display: none;
+            &::before{
+                content: '';
+                display: block;
+                position: absolute;
+                width: 0;
+                height: 0;
+                bottom: -11px;
+                left: -10px;
+                rotate: -130deg;
+                border-bottom: 25px solid #fff;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+            &.show{
+                display: block;
+            }
+        }
+        #restart{
+            border:none;
+            outline: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            border-radius: 5px;
+            padding: 8px 12px;
+            text-transform: capitalize;
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 18px;
+            color: #fff;
+            background-color: #448;
+            box-shadow: 0 0 15px #4482;
+            transition: scale 0.3s,box-shadow 0.3s;
+            cursor: pointer;
+            &:active{
+                scale: 0.9;
+                box-shadow: 0 0 15px #448;
+            }
+
+        }
+        @keyframes show {
+            to{
+                translate: 0 0;
+            }
+        }
+
+    </style>
 </head>
 <body>
-  <h1>Hola, este es mi sitio web desde GitHub Actions 🚀</h1>
-  <p>Modifica este archivo y haz push para actualizar tu web.</p>
+    <button id="restart">Reset</button>
+    <div id="hola">hola</div>
+    <img id="rata" src="https://media.tenor.com/QtTcHUw0n4kAAAAe/gato-castor-castor.png" alt="rata">
+    <script>
+        const rata = document.getElementById('rata')
+        const hola = document.getElementById('hola')
+        const restart = document.getElementById('restart')
+        window.addEventListener('load',()=>{
+            setTimeout(()=>{
+                start()
+            },2000)
+        })
+        function start(){
+            rata.classList.add('move')
+            const show = ()=>{
+                hola.classList.add('show')
+                rata.removeEventListener('animationend',show)
+            }
+            rata.addEventListener('animationend',show)
+        }
+        function reset(){
+            hola.classList.remove('show')
+            rata.classList.remove('move')
+            setTimeout(start,1000)
+        }
+        restart.addEventListener('click',reset)
+    </script>
 </body>
 </html>
